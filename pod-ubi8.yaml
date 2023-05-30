@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: backup-network-test-ubi-8
+  namespace: powerdata
+  annotations:
+    k8s.v1.cni.cncf.io/networks: '[
+            { "name": "backup-network" }
+    ]'
+spec:
+  nodeSelector:
+    backup-network: "true"
+  containers:
+    - name: backup-network-test-ubi-8
+      image: registry.access.redhat.com/ubi8/ubi:8.8-854
+      command: ["/bin/sh", "-c", "while true ; do sleep 2 ; done"]
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ["ALL"]
+    # runAsNonRoot: flase
+    seccompProfile:
+      type: RuntimeDefault
+
+

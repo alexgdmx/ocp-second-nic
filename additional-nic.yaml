@@ -1,0 +1,25 @@
+apiVersion: operator.openshift.io/v1
+kind: Network
+metadata:
+  name: cluster
+spec:
+  additionalNetworks: 
+  - name: backup-network 
+    namespace: powerdata 
+    rawCNIConfig: |- 
+      {
+        "cniVersion": "0.3.1",
+        "name": "backup-network-cni",
+        "type": "host-device",
+        "device": "ens224",
+        "hwaddr": "00:50:56:92:52:f8",
+        "ipam": {
+          "type": "static",
+          "addresses": [
+             {
+               "address": "10.56.240.147/24"
+             }
+          ]
+        }
+      }
+    type: Raw
